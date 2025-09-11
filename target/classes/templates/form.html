@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${formTitle}">Student Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .container { max-width: 640px; margin: 24px auto; }
+        label { display:block; margin: 8px 0 4px; font-weight: 600; }
+        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        .error { color: #b91c1c; font-size: 0.9rem; }
+        .row { margin-bottom: 12px; }
+        .btn { padding: 8px 12px; border-radius: 4px; text-decoration: none; }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-secondary { background: #6b7280; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${formTitle}">Student</h1>
+    <form th:action="${student.id} != null ? @{'/students/' + ${student.id}} : @{/students}" th:object="${student}" method="post">
+        <div class="row" th:if="${student.id} != null">
+            <label>ID</label>
+            <input type="text" th:value="${student.id}" disabled>
+        </div>
+
+        <div class="row">
+            <label for="name">Name</label>
+            <input id="name" type="text" th:field="*{name}" placeholder="Enter name">
+            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+
+        <div class="row">
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" placeholder="name@example.com">
+            <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+
+        <div class="row">
+            <label for="course">Course</label>
+            <input id="course" type="text" th:field="*{course}" placeholder="Enter course">
+            <p class="error" th:if="${#fields.hasErrors('course')}" th:errors="*{course}"></p>
+        </div>
+
+        <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <a class="btn btn-secondary" th:href="@{/students}">Cancel</a>
+        </div>
+    </form>
+    
+</div>
+</body>
+</html>
+
+
